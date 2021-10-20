@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: base-dev-api
+  namespace: strapi-base
+  labels:
+    app: base-dev-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: base-dev-api
+  template:
+    metadata:
+      labels:
+        app: base-dev-api
+    spec:
+      imagePullSecrets:
+      - name: regcred
+      containers:
+        - name: base-dev-web
+          imagePullPolicy: Always
+          image: registry.thecodeworkers.com/base-api:latest-dev
+          ports:
+            - name: http-port
+              containerPort: 1337

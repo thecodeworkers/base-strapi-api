@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: base-stg-api
+  namespace: strapi-base
+  labels:
+    app: base-stg-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: base-stg-api
+  template:
+    metadata:
+      labels:
+        app: base-stg-api
+    spec:
+      imagePullSecrets:
+      - name: regcred
+      containers:
+        - name: base-stg-web
+          imagePullPolicy: Always
+          image: registry.thecodeworkers.com/base-api:latest-test
+          ports:
+            - name: http-port
+              containerPort: 1337
